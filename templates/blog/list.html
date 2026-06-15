@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+<title>{% block title %} Home {% endblock %}</title>
+
+{% block content %}
+<div class="banner-area banner-inner-1 bg-black" id="banner">
+    <div class="banner-inner pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="thumb after-left-top">
+                        {% if latest.image %}
+                        <img src="{{ latest.image.url }}" alt="img">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-6 align-self-center">
+                    <div class="banner-details mt-4 mt-lg-0">
+                        <div class="post-meta-single">
+                            <ul>
+                                <li><a class="tag-base tag-blue" href="#">Tech</a></li>
+                                <li class="date"><i class="fa fa-clock-o"></i>{{ latest.publish }}</li>
+                            </ul>
+                        </div>
+                        <h3 style="color: #ffffff;">{{ latest.title }}</h3>
+                        <p>{{ latest.body|truncatewords:20|safe|linebreaks }}</p>
+                        <a class="btn btn-blue" href="#">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row"> {% for post in posts %}
+            <div class="col-lg-3 col-sm-6 mb-4">
+                <div class="single-post-wrap style-white">
+                    <div class="thumb">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="img">
+                        {% endif %}
+                        <a class="tag-base tag-blue" href="#">Tech</a>
+                    </div>
+                    <div class="details">
+                        <h6 class="title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h6>
+                        <div class="post-meta-single mt-3">
+                            <ul>
+                                <li><i class="fa fa-clock-o"></i>{{ post.publish }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}
