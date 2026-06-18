@@ -24,14 +24,15 @@
                         </div>
                         <h3 style="color: #ffffff;">{{ latest.title }}</h3>
                         <p>{{ latest.body|truncatewords:20|safe|linebreaks }}</p>
-                        <a class="btn btn-blue" href="#">Read More</a>
+                        <a class="btn btn-blue" href="{{ latest.get_absolute_url }}">Read More</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="container mt-5">
-        <div class="row"> {% for post in posts %}
+        <div class="row">
+            {% for post in posts %}
             <div class="col-lg-3 col-sm-6 mb-4">
                 <div class="single-post-wrap style-white">
                     <div class="thumb">
@@ -44,7 +45,7 @@
                         <h6 class="title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h6>
                         <div class="post-meta-single mt-3">
                             <ul>
-                                <li><i class="fa fa-clock-o"></i>{{ post.publish }}</li>
+                                <li><i class="fa fa-clock-o"></i>{{ post.publish|date:"d-M Y" }}</li>
                             </ul>
                         </div>
                     </div>

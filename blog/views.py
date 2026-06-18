@@ -1,10 +1,9 @@
 from django.shortcuts import render,get_object_or_404
-from django.http import HttpResponse
-
 from .models import *
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
 def post_list(request):
-    posts = Post.published.all()
+    posts = Post.published.order_by('-publish')[1:]
     latest = Post.published.order_by('-publish').first()
     return render(request,'blog/list.html',{'posts': posts,'latest':latest})
 

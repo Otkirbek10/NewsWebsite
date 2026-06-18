@@ -1,16 +1,143 @@
+{% extends 'base.html' %}
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.title }}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} {{post.title}} {% endblock %}</title>
+    <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+
 {% block content %}
-    {{post.title}} <br>
-    {{ post.body }}
-    {% if post.image %}
-    <img class="img-fluid" src="{{ post.image.url }}" alt="">
-    {% endif %}
-{% endblock %}
+<body>
+
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-overlay"></div>
+        <!-- Category image -->
+        <img src="{{ post.image.url }}" 
+            alt="Community garden protest" class="hero-img" />
+        <div class="hero-text container">
+            <h1>{{ post.title }}</h1>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container main-layout">
+
+        <!-- ARTICLE BODY -->
+        <main class="article-body">
+
+            <!-- Author Row -->
+            <div class="author-row">
+                <img src="https://i.pravatar.cc/40?img=12" alt="Author" class="author-avatar" />
+                <div class="author-info">
+                    <span class="author-name">{{ post.author }}</span>
+                    <span class="author-meta">{{ post.publish }}<a href="#"
+                            class="tag-env"> ENVIRONMENT</a></span>
+                </div>
+            </div>
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Article image" class="article-inline-img" />
+            {% endif %}
+
+            <p>{{ post.body }}</p>
+
+
+            <!-- Related Articles -->
+            <section class="related-section">
+                <h2>RELATED ARTICLES <span>(From the Same Category)</span></h2>
+                <div class="related-grid">
+                    <div class="related-card">
+                        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&q=70"
+                            alt="Related 1" />
+                        <p class="related-title">The Size of Community Gardens in Urban Food Deserts</p>
+                        <span class="related-tag">News post</span>
+                    </div>
+                    <div class="related-card">
+                        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=300&q=70"
+                            alt="Related 2" />
+                        <p class="related-title">The Rise of Community Gardens in Food Courts</p>
+                        <span class="related-tag">News post</span>
+                    </div>
+                    <div class="related-card">
+                        <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=300&q=70"
+                            alt="Related 3" />
+                        <p class="related-title">The Pies of Community Gardens in Urban Food Deserts</p>
+                        <span class="related-tag">News post</span>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <!-- Popular Articles -->
+            <div class="sidebar-card">
+                <h3>Popular Articles</h3>
+                <ul class="popular-list">
+                    <li>
+                        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=80&q=60"
+                            alt="Popular 1" />
+                        <a href="#">The Rise of Community Gardens in Urban Food Deserts</a>
+                    </li>
+                    <li>
+                        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=80&q=60"
+                            alt="Popular 2" />
+                        <a href="#">The Atentible Community Gardens in Urban Food Deserts</a>
+                    </li>
+                    <li>
+                        <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=80&q=60"
+                            alt="Popular 3" />
+                        <a href="#">The Rise of Community Garden in Urban Food Deserts</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Follow Us -->
+            <div class="sidebar-card">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon fb" aria-label="Facebook">f</a>
+                    <a href="#" class="social-icon tw" aria-label="Twitter">t</a>
+                    <a href="#" class="social-icon ig" aria-label="Instagram">in</a>
+                    <a href="#" class="social-icon yt" aria-label="YouTube">&#9654;</a>
+                </div>
+            </div>
+
+            <!-- Reader Comments -->
+            <div class="sidebar-card">
+                <h3>Reader Comments</h3>
+                <textarea class="comment-input" placeholder="Have a comment..."></textarea>
+
+                <div class="comment-thread">
+                    <div class="comment">
+                        <img src="https://i.pravatar.cc/32?img=5" alt="Commenter" class="comment-avatar" />
+                        <div class="comment-body">
+                            <div class="comment-meta"><strong>Sonesh-kmanare</strong> <span>5 minutes ago</span> <a
+                                    href="#">Reply</a></div>
+                            <textarea class="comment-input" placeholder="Have a comment..."></textarea>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <img src="https://i.pravatar.cc/32?img=9" alt="Commenter" class="comment-avatar" />
+                        <div class="comment-body">
+                            <div class="comment-meta"><strong>Aen Noon</strong> <span>5 minutes ago</span> <a
+                                    href="#">Reply</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
 </body>
+{% endblock %}
+</html>
