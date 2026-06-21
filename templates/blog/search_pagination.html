@@ -1,0 +1,47 @@
+<div>
+    {% if page.has_other_pages %}
+    <nav aria-label="Page navigation" class="mt-5">
+        <ul class="pagination justify-content-center">
+
+            {% if page.has_previous %}
+            <li class="page-item">
+                <a class="page-link border-primary" style="color: #0d6efd !important;"
+                    href="?query={{ query }}&page={{ page.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for num in page_range %}
+            {% if num == page.paginator.ELLIPSIS %}
+            <li class="page-item disabled"><span class="page-link text-muted bg-light">{{ num }}</span></li>
+
+            {% elif num == page.number %}
+            <li class="page-item active">
+                <span class="page-link text-white"
+                    style="background-color: #0d6efd !important; border-color: #0d6efd !important;">
+                    {{ num }}
+                </span>
+            </li>
+
+            {% else %}
+            <li class="page-item">
+                <a class="page-link border-primary" style="color: #0d6efd !important; font-weight: bold;"
+                    href="?query={{ query }}&page={{ num }}">{{ num }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if page.has_next %}
+            <li class="page-item">
+                <a class="page-link border-primary" style="color: #0d6efd !important;"
+                    href="?query={{ query }}&page={{ page.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+    {% endif %}
+</div>

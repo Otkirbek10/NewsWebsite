@@ -67,7 +67,7 @@
     <div class="td-search-popup" id="td-search-popup">
         <form action="index.html" class="search-form">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search.....">
+                <input type="text" class="form-control" placeholder="Search....." name="query" value="{{ request.GET.query }}">
             </div>
             <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
         </form>
@@ -163,10 +163,10 @@
                     </ul>
                 </div>
                 <div class="nav-right-part nav-right-part-desktop">
-                    <div class="menu-search-inner">
-                        <input type="text" placeholder="Search For">
+                    <form class="menu-search-inner" action="{% url 'blog:search' %}" method="get">
+                        <input type="text" placeholder="Search For" name="query" value="{{ request.GET.query }}">
                         <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </nav>

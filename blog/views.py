@@ -3,6 +3,7 @@ from .models import *
 from django.http import HttpResponse
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from .forms import AddPostForm
+from django.db.models import Q
 
 
 def post_list(request):
@@ -58,4 +59,29 @@ def delete_post(request,post_id):
     else:
         post.delete()
         return redirect('/')
-        
+    
+
+def search_post(request):
+    query = request.GET.get('query', '').strip()
+    page_number = request.GET.get('page', 1)
+    if query:
+        all_results = Post.objects.filter(
+            Q(title__icontains=query) | Q(body__icontains=query)
+            ).distinct()
+    else:
+        all_results = Post.objects.none() 
+    paginator = Paginator(all_results, 3)
+    page_obj = paginator.get_page(page_number)
+
+    custom_page_range = paginator.get_elided_page_range(
+        number=page_obj.number, 
+        on_each_side=2, 
+        on_ends=1
+    )
+
+    context = {
+        'data': page_obj,
+        'page_range': custom_page_range,
+        'query': query,
+    }
+    return render(request, 'blog/search.html', context)

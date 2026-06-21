@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+<title>{% block title %} Found Posts {% endblock %}</title>
+
+{% block content %}
+<!-- 1. CHANGED: 'bg-black' to 'bg-white' -->
+<div class="banner-area banner-inner-1 bg-white" id="banner">
+    <div class="container mt-5 pt-4">
+        <div class="row">
+            {% for post in data %}
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <!-- 2. CHANGED: 'style-white' to 'style-dark' (or remove it) so text turns dark/readable -->
+                <div class="single-post-wrap style-dark">
+
+                    <div class="thumb" style="position: relative; overflow: hidden; border-radius: 8px;">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="img"
+                            style="width: 100%; height: 250px; object-fit: cover;">
+                        {% endif %}
+                        <a class="tag-base tag-blue" href="#">Tech</a>
+                    </div>
+
+                    <div class="details mt-3">
+                        <!-- 3. OPTIONAL: If your theme text doesn't turn dark automatically, add the class 'text-dark' here -->
+                        <h6 class="title"><a class="text-dark" href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                        </h6>
+                        <div class="post-meta-single mt-3">
+                            <ul>
+                                <!-- 4. OPTIONAL: Changed clock icon/text color to dark grey for white background visibility -->
+                                <li class="text-muted"><i class="fa fa-clock-o me-1"></i>{{ post.publish|date:"d-M Y" }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- 5. CHANGED: 'text-white' to 'text-dark' -->
+            <div class="col-12 text-center text-dark my-5">
+                <h3>No posts found matching your search.</h3>
+            </div>
+            {% endfor %}
+        </div>
+        {% include 'blog/search_pagination.html' with page=data %}
+    </div>
+</div>
+{% endblock %}
