@@ -46,6 +46,10 @@
             {% endif %}
 
             <p>{{ post.body }}</p>
+            {% if request.user == post.author %}
+            <a href="{% url 'blog:edit_post' post.id %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'blog:delete' post.id %}" class="btn btn-danger">Delete </a>
+            {% endif %}
 
 
             <!-- Related Articles -->

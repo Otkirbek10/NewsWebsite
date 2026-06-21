@@ -7,5 +7,8 @@ app_name = 'blog'
 
 urlpatterns = [
     path('',post_list,name='post_list'),
-    path('<int:year>/<int:month>/<int:day>/<slug:slug>/',post_detail,name = 'post_detail')
+    path('<int:year>/<int:month>/<int:day>/<slug:slug>/',post_detail,name = 'post_detail'),
+    path('addpost/', add_post, name = 'add_post'),
+    path('edit/<int:post_id>/',edit_post, name = 'edit_post'),
+    path("delete/<int:post_id>/",delete_post, name = 'delete')
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

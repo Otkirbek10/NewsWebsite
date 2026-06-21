@@ -3992,3 +3992,56 @@ img {
   margin: 0 0 20px 0;
   display: block;
 }
+
+/* PAGINATOR */
+.pagination {
+  display: flex;
+  list-style: none;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+}
+
+.page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.page-link:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.page-item.active .page-link {
+  background: #ffffff;
+  color: #0a1628;
+  /* dark blue — matches your bg */
+  border-color: #ffffff;
+  font-weight: 700;
+}
+
+
+/* For currency */
+
+.topbar-menu ul li,
+.topbar-menu ul li a {
+  color: #ffffff !important;
+}
+
+.topbar-menu ul li {
+  font-size: 15px;
+  font-weight: 300;
+  white-space: nowrap;
+}

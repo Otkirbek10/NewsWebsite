@@ -17,6 +17,38 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 
+    <!-- Add this in your <head> or before </body> -->
+    <script>
+        fetch('https://api.exchangerate-api.com/v4/latest/UZS')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('usd').textContent = 'USD : ' + (1 / data.rates.USD).toFixed(2) + ' sum';
+                document.getElementById('eur').textContent = 'EUR : ' + (1 / data.rates.EUR).toFixed(2) + ' sum';
+                document.getElementById('rub').textContent = 'RUB : ' + (1 / data.rates.RUB).toFixed(2) + ' sum';
+            })
+            .catch(() => {
+                document.getElementById('usd').textContent = 'Rates unavailable';
+            });
+    </script>
+    <script>
+            fetch('https://api.open-meteo.com/v1/forecast?latitude=41.5477&longitude=60.6347&current_weather=true')
+                .then(res => res.json())
+                .then(data => {
+                    const temp = data.current_weather.temperature;
+                    document.getElementById('weather').textContent = '🌤️ Urgench: ' + temp + '°C';
+                })
+                .catch(() => {
+                    document.getElementById('weather').textContent = '🌤️ Weather unavailable';
+                });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+                const now = new Date();
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                document.getElementById('datetime').textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+            });
+    </script>
 </head>
 
 <body>
@@ -52,17 +84,16 @@
                     <div class="col-lg-6 col-md-7 align-self-center">
                         <div class="topbar-menu text-md-left text-center">
                             <ul class="align-self-center">
-                                <li><a href="#">Author</a></li>
-                                <li><a href="#">Advertisment</a></li>
-                                <li><a href="#">Member</a></li>
-                                <li><a href="#">Sitemap</a></li>
+                                <li id="weather">🌤️ Urgench: ...</li>
+                                <li id="usd">USD: ...</li>
+                                <li id="eur">EUR: ...</li>
+                                <li id="rub">RUB: ...</li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-5 mt-2 mt-md-0 text-md-right text-center">
                         <div class="topbar-social">
-                            <div class="topbar-date d-none d-lg-inline-block"><i class="fa fa-calendar"></i> Saturday,
-                                October 7</div>
+                            <div class="topbar-date d-none d-lg-inline-block"><i class="fa fa-calendar"></i><span id="datetime">...</div>
                             <ul class="social-area social-area-2">
                                 <li><a class="facebook-icon" href="#"><i class="fa fa-facebook"></i></a></li>
                                 <li><a class="twitter-icon" href="#"><i class="fa fa-twitter"></i></a></li>
@@ -124,7 +155,7 @@
                             <a href="#latest">Latest News</a>
                         </li>
                         <li class="current-menu-item">
-                            <a href="#grid">News Grid</a>
+                            <a href="{% url 'blog:add_post' %}">Add Post</a>
                         </li>
                         <li class="current-menu-item">
                             <a target="_blank" href="https://1.envato.market/5OQX2">Pro Version</a>
