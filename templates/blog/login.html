@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 py-4 border rounded shadow-sm bg-white">
+            <h1 class="text-center mb-4 text-primary"> Login </h1>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="username" class="form-label font-weight-bold">Username</label>
+                    <input type="text" class="form-control" id="username" name="username"
+                        placeholder="Enter your username" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="password" class="form-label font-weight-bold">Password</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                        placeholder="Enter your password" required>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                </div>
+                <p class="py-2"> Don't have an account? <a href="{% url 'blog:register' %}"> <b>Sign Up</b></a></p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

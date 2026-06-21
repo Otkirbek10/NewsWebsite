@@ -151,15 +151,26 @@
                         <li class="current-menu-item">
                             <a href="#trending">Trending News</a>
                         </li>
-                        <li class="current-menu-item">
-                            <a href="#latest">Latest News</a>
-                        </li>
+
+                        {% if request.user.is_authenticated %}
                         <li class="current-menu-item">
                             <a href="{% url 'blog:add_post' %}">Add Post</a>
                         </li>
                         <li class="current-menu-item">
-                            <a target="_blank" href="https://1.envato.market/5OQX2">Pro Version</a>
+                            <a href="">{{ request.user.username }}</a>
                         </li>
+                        <li class="current-menu-item">
+                            <a href="{% url 'blog:logout' %}">Log Out</a>
+                        </li>
+
+                        {% else %}
+                        <li class="current-menu-item">
+                            <a href="{% url 'blog:login' %}">Login</a>
+                        </li>
+                        <li class="current-menu-item">
+                            <a target="_blank" href="{% url 'blog:register' %}">Sign Up</a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <div class="nav-right-part nav-right-part-desktop">
