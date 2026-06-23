@@ -45,7 +45,7 @@
             <img src="{{ post.image.url }}" alt="Article image" class="article-inline-img" />
             {% endif %}
 
-            <p>{{ post.body }}</p>
+            <p>{{ post.body|safe }}</p>
             {% if request.user == post.author %}
             <a href="{% url 'blog:edit_post' post.id %}" class="btn btn-warning">Edit</a>
             <a href="{% url 'blog:delete' post.id %}" class="btn btn-danger">Delete </a>

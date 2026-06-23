@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
+    'ckeditor_uploader',
     'crispy_forms',
     "crispy_bootstrap4",
     'blog.apps.BlogConfig',
@@ -133,3 +135,15 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': [
+            'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 
+            'link', 'bulletedList', 'numberedList', 'blockQuote', 'imageUpload'
+        ],
+    },
+}
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
