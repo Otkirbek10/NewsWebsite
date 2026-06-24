@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404, redirect
 from .models import *
 from django.http import HttpResponse
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-from .forms import AddPostForm
+from .forms import AddPostForm,CommentForm
 from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate,login,logout
@@ -24,7 +24,17 @@ def post_list(request):
 
 def post_detail(request,year,month, day, slug):
     post = get_object_or_404(Post, slug = slug,status = Post.Status.PUBLISHED, publish__year = year, publish__month = month, publish__day = day)
-    return render(request,'blog/detail.html',{'post': post})
+    form = CommentForm(request.POST)
+    
+    if form.is_valid():
+        new_comment = form.save(commit=False)
+        new_comment.author = request.user
+        new_comment.post = post
+        new_comment.save()
+    else:
+        form = CommentForm()
+    comments = Comment.objects.filter(post = post).order_by('-created_at')
+    return render(request,'blog/detail.html',{'post': post, 'form':form, 'comments': comments})
 
 
 @login_required(login_url='blog:login')

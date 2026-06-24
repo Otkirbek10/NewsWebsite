@@ -17,7 +17,7 @@
                         <img src="{{ post.image.url }}" alt="img"
                             style="width: 100%; height: 250px; object-fit: cover;">
                         {% endif %}
-                        <a class="tag-base tag-blue" href="#">Tech</a>
+                        <a class="tag-base tag-blue" href="{% url 'blog:category' post.category.slug %}">{{ post.category.name }}</a>
                     </div>
 
                     <div class="details mt-3">

@@ -37,8 +37,7 @@
                 <img src="https://i.pravatar.cc/40?img=12" alt="Author" class="author-avatar" />
                 <div class="author-info">
                     <span class="author-name">{{ post.author }}</span>
-                    <span class="author-meta">{{ post.publish }}<a href="#"
-                            class="tag-env"> ENVIRONMENT</a></span>
+                    <span class="author-meta">{{ post.publish }}  <a class="tag-base tag-blue" href="{% url 'blog:category' post.category.slug %}">    {{ post.category.name }}</a>
                 </div>
             </div>
             {% if post.image %}
@@ -115,30 +114,37 @@
                 </div>
             </div>
 
-            <!-- Reader Comments -->
-            <div class="sidebar-card">
-                <h3>Reader Comments</h3>
-                <textarea class="comment-input" placeholder="Have a comment..."></textarea>
-
-                <div class="comment-thread">
-                    <div class="comment">
-                        <img src="https://i.pravatar.cc/32?img=5" alt="Commenter" class="comment-avatar" />
-                        <div class="comment-body">
-                            <div class="comment-meta"><strong>Sonesh-kmanare</strong> <span>5 minutes ago</span> <a
-                                    href="#">Reply</a></div>
-                            <textarea class="comment-input" placeholder="Have a comment..."></textarea>
-                        </div>
-                    </div>
-                    <div class="comment">
-                        <img src="https://i.pravatar.cc/32?img=9" alt="Commenter" class="comment-avatar" />
-                        <div class="comment-body">
-                            <div class="comment-meta"><strong>Aen Noon</strong> <span>5 minutes ago</span> <a
-                                    href="#">Reply</a></div>
+        <div class="sidebar-card">
+            <h3>Reader Comments</h3>
+            {% if request.user.is_authenticated %}
+            <form method="POST" class="comment-input">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+            {% endif %}
+        
+            <hr class="my-4">
+            <div class="comment-list-wrapper">
+                {% for comment in comments %}
+                <div class="comment-thread mb-3">
+                    <div class="comment d-flex align-items-start">
+                        <img src="https://i.pravatar.cc/32?img=5" alt="Commenter" class="comment-avatar mr-2" />
+                        <div class="comment-body w-100">
+                            <div class="comment-meta">
+                                <strong>{{ comment.author }}</strong>
+                                <small class="text-muted d-block">{{ comment.created_at }}</small>
+                            </div>
+                            <div class="comment-text mt-1">
+                                {{ comment.body }} </div>
                         </div>
                     </div>
                 </div>
+                {% empty %}
+                <p class="text-muted">No comments yet. Be the first to share your thoughts!</p>
+                {% endfor %}
             </div>
-
+        </div>
         </aside>
     </div>
 

@@ -9,13 +9,36 @@
 <div class="container">
     <div class="row">
         <div class="col-md-7 offset-2 py-4">
-            <h1 class="text-center"> Add Post</h1>
+            <h1 class="text-center mb-4">Add Post</h1>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.media }}
-                {{ form|crispy }}
-                
-                <button type="submit" class="btn btn-primary">Add</button>
+
+                <div class="form-group mb-4">
+                    {{ form.title|as_crispy_field }}
+                </div>
+
+                <div class="form-group mb-4 d-block clearfix">
+                    {{ form.category|as_crispy_field }}
+                </div>
+
+                <div class="form-group mb-4 d-block clearfix">
+                    {{ form.image|as_crispy_field }}
+                </div>
+
+                <div class="form-group mb-4 pt-2">
+                    <label for="{{ form.body.id_for_label }}"><strong>{{ form.body.label }}*</strong></label>
+                    <div class="d-block w-100 mt-2">
+                        {{ form.body }}
+                    </div>
+                    {% if form.body.errors %}
+                    <div class="text-danger mt-1">{{ form.body.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
             </form>
         </div>
     </div>

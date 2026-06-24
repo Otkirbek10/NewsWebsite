@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Post,Category
+from .models import Post,Category,Comment
+
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -17,5 +19,7 @@ class PostAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish'
     ordering = ['status', 'publish']
     show_facets = admin.ShowFacets.ALWAYS
+
+admin.site.register(Comment)
 
 
