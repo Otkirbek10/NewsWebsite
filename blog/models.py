@@ -6,6 +6,17 @@ from django.utils.text import slugify
 from ckeditor.fields import RichTextField
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=250, db_index= True)
+    slug = models.SlugField(max_length=250, db_index= True, unique=True)
+    photo = models.ImageField(upload_to="category_photos/%Y/%m/%d/",null=True,blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('blog:category',args=[self.slug])
+
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return (
@@ -21,6 +32,7 @@ class Post(models.Model):
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
+    category = models.ForeignKey(Category,on_delete=models.PROTECT, null=True)
     image = models.ImageField(upload_to="photos/%Y/%m/%d/",null=True,blank=True)
     body = RichTextField()
     publish = models.DateTimeField(default = timezone.now)
@@ -42,7 +54,9 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:post_detail',args=[self.publish.year, self.publish.month, self.publish.day,self.slug])
-# Creates auto slugs when adding posts 
+
+
+
     def save(self,*args,**kwargs):
         if not self.slug:
             self.slug = slugify(self.title)

@@ -18,7 +18,7 @@
                     <div class="banner-details mt-4 mt-lg-0">
                         <div class="post-meta-single">
                             <ul>
-                                <li><a class="tag-base tag-blue" href="#">Tech</a></li>
+                                <a class="tag-base tag-blue" href="{% url 'blog:category' latest.category.slug %}">{{ latest.category.name }}</a>
                                 <li class="date"><i class="fa fa-clock-o"></i>{{ latest.publish }}</li>
                             </ul>
                         </div>
@@ -39,7 +39,7 @@
                         {% if post.image %}
                         <img src="{{ post.image.url }}" alt="img">
                         {% endif %}
-                        <a class="tag-base tag-blue" href="#">Tech</a>
+                        <a class="tag-base tag-blue" href="{% url 'blog:category' post.category.slug %}">{{ post.category.name }}</a>
                     </div>
                     <div class="details">
                         <h6 class="title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h6>

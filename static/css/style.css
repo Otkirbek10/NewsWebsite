@@ -4045,3 +4045,29 @@ img {
   font-weight: 300;
   white-space: nowrap;
 }
+
+/* Dropdown */
+
+/* 1. Make the dropdown menu items smaller */
+.dropdown-menu .dropdown-item {
+  font-size: 1px;
+  /* Reduces text size (default is usually 16px) */
+  padding: 0.15rem 1rem;
+  /* Reduces top and bottom padding to make it compact */
+  color: #ffffff;
+  /* Keeps the text white by default */
+  transition: background-color 0.2s ease;
+  /* Makes any hover effect smooth */
+}
+
+/* 2. Stop the background from turning white when hovered or focused */
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus,
+.dropdown-menu .dropdown-item:active {
+  background-color: #1b3a5a !important;
+  /* Changes hover background to a soft lighter blue instead of white */
+  color: #ffffff !important;
+  /* Ensures text stays white */
+  outline: none;
+  /* Removes any default browser focus rings */
+}

@@ -12,6 +12,7 @@ urlpatterns = [
     path('edit/<int:post_id>/',edit_post, name = 'edit_post'),
     path("delete/<int:post_id>/",delete_post, name = 'delete'),
     path('search/',search_post,name = 'search'),
+    path('category/<slug:slug>/', category, name = 'category'),
     path('register/', register_user, name = 'register'),
     path('login/', login_user, name = 'login'),
     path('logout/', logout_user, name = 'logout')

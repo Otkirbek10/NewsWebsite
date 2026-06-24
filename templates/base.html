@@ -1,7 +1,7 @@
 {% load static %}
 
 {% block extrahead %}
-<script>window.CKEDITOR_BASEPATH = '/my_static/ckeditor/ckeditor/';</script>
+<script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
 {{ block.super }}
 {% endblock %}
 <!DOCTYPE html>
@@ -153,9 +153,26 @@
                         <li class="current-menu-item">
                             <a href="#banner">Home</a>
                         </li>
-                        <li class="current-menu-item">
-                            <a href="#trending">Trending News</a>
+
+
+
+
+                        <li class="nav-item dropdown current-menu-item">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Category
+                            </a>
+
+                            <div class="dropdown-menu bg-blue" aria-labelledby="navbarDropdown">
+                                {% for cat in categories %}
+                                <a class="dropdown-item" href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+                                {% endfor %}
+                            </div>
                         </li>
+
+
+
+
 
                         {% if request.user.is_authenticated %}
                         <li class="current-menu-item">

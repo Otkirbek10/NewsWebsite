@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ cat.name }} news {% endblock %}
+
+{% block content %}
+
+<div class="banner-area banner-inner-1 bg-white" id="banner">
+    <h1 class="text-center" py-5> {{ cat.name }} news</h1>
+    <div class="container mt-5 pt-4">
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <!-- 2. CHANGED: 'style-white' to 'style-dark' (or remove it) so text turns dark/readable -->
+                <div class="single-post-wrap style-dark">
+
+                    <div class="thumb" style="position: relative; overflow: hidden; border-radius: 8px;">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="img"
+                            style="width: 100%; height: 250px; object-fit: cover;">
+                        {% endif %}
+                        <a class="tag-base tag-blue" href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+                    </div>
+
+                    <div class="details mt-3">
+                        <!-- 3. OPTIONAL: If your theme text doesn't turn dark automatically, add the class 'text-dark' here -->
+                        <h6 class="title"><a class="text-dark" href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                        </h6>
+                        <div class="post-meta-single mt-3">
+                            <ul>
+                                <!-- 4. OPTIONAL: Changed clock icon/text color to dark grey for white background visibility -->
+                                <li class="text-muted"><i class="fa fa-clock-o me-1"></i>{{ post.publish|date:"d-M Y" }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- 5. CHANGED: 'text-white' to 'text-dark' -->
+            <div class="col-12 text-center text-dark my-5">
+                <h3>No posts found matching your search.</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
