@@ -152,11 +152,8 @@
                 <div class="collapse navbar-collapse" id="nextpage_main_menu">
                     <ul class="navbar-nav menu-open">
                         <li class="current-menu-item">
-                            <a href="#banner">Home</a>
+                            <a href="{% url 'blog:contact' %}">Contact</a>
                         </li>
-
-
-
 
                         <li class="nav-item dropdown current-menu-item">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -170,10 +167,6 @@
                                 {% endfor %}
                             </div>
                         </li>
-
-
-
-
 
                         {% if request.user.is_authenticated %}
                         <li class="current-menu-item">

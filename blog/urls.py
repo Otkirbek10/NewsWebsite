@@ -15,5 +15,8 @@ urlpatterns = [
     path('category/<slug:slug>/', category, name = 'category'),
     path('register/', register_user, name = 'register'),
     path('login/', login_user, name = 'login'),
-    path('logout/', logout_user, name = 'logout')
+    path('logout/', logout_user, name = 'logout'),
+    path('contact/',ContactView.as_view(), name = 'contact'),
+    path('<slug:slug>/share/', post_share, name = 'post_share')
+
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

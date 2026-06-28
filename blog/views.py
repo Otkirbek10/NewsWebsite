@@ -2,15 +2,20 @@ from django.shortcuts import render,get_object_or_404, redirect
 from .models import *
 from django.http import HttpResponse
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-from .forms import AddPostForm,CommentForm
+from .forms import *
 from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.views.generic import FormView
+from django.urls import reverse_lazy
+from django.core.mail import send_mail
 
 def post_list(request):
-    posts = Post.published.order_by('-publish')[1:]
-    latest = Post.published.order_by('-publish').first()
+    featured_and_posts = list(
+    Post.published.select_related('category').order_by('-publish')[:5])
+    latest = featured_and_posts[0] if featured_and_posts else None
+    posts = featured_and_posts[1:]
     paginator = Paginator(posts,4)
     page = request.GET.get('page')
     try:
@@ -23,6 +28,8 @@ def post_list(request):
 
 def post_detail(request,year,month, day, slug):
     post = get_object_or_404(Post, slug = slug,status = Post.Status.PUBLISHED, publish__year = year, publish__month = month, publish__day = day)
+    related_posts = Post.published.filter(
+    category=post.category).exclude(id=post.id)[:3]
     form = CommentForm(request.POST)
     
     if form.is_valid():
@@ -32,8 +39,8 @@ def post_detail(request,year,month, day, slug):
         new_comment.save()
     else:
         form = CommentForm()
-    comments = Comment.objects.filter(post = post).order_by('-created_at')
-    return render(request,'blog/detail.html',{'post': post, 'form':form, 'comments': comments})
+    comments = Comment.objects.filter(post = post).order_by('-created_at').select_related('author')
+    return render(request,'blog/detail.html',{'post': post, 'form':form, 'related_posts':related_posts, 'comments': comments})
 
 
 @login_required(login_url='blog:login')
@@ -82,7 +89,7 @@ def search_post(request):
     if query:
         all_results = Post.objects.filter(
             Q(title__icontains=query) | Q(body__icontains=query)
-            ).distinct()
+            ).select_related('category')
     else:
         all_results = Post.objects.none() 
     paginator = Paginator(all_results, 3)
@@ -139,3 +146,30 @@ def category(request,slug):
     posts = Post.objects.filter(category__slug = slug)
     cat = Category.objects.get(slug = slug)
     return render(request,'blog/category.html',{'posts': posts,'cat':cat})
+
+
+class ContactView(FormView):
+    template_name = 'blog/contact.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('/')
+
+    def form_valid(self,form):
+        print(form.cleaned_data)
+        return redirect('/')
+    
+def post_share(request,slug):
+    post = get_object_or_404(Post, slug = slug,status = Post.Status.PUBLISHED)
+    sent = False
+
+    if request.method == 'POST':
+        form = EmailPostForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            post_url = request.build_absolute_uri(post.get_absolute_url())
+            subject = f"{cd['name']} recommends you read ", f"{post.title}"
+            message = f"Read {post.title} at {post_url}", f"{cd['name']}\'s comments: {cd['comments']}"
+            send_mail(subject, message, 'admin@myblog.com', [cd['to']])
+            sent = True
+    else:
+        form = EmailPostForm()
+    return render(request,'blog/share.html',{'post':post,'form':form, 'sent':sent})

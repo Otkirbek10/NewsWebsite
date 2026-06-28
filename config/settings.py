@@ -38,11 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "debug_toolbar",
     'ckeditor',
     'ckeditor_uploader',
     'crispy_forms',
     "crispy_bootstrap4",
-    'blog.apps.BlogConfig',
+    'blog.apps.BlogConfig', 
+    'captcha'
 ]
 
 
@@ -55,9 +57,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 TEMPLATES = [
     {
@@ -71,7 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'blog.context_processors.category_context',
+
             ],
         },
     },
@@ -149,3 +154,12 @@ CKEDITOR_CONFIGS = {
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_RESTRICT_BY_USER = True
+
+
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+CAPTCHA_FONT_SIZE = 35
+CAPTCHA_LENGTH = 8
