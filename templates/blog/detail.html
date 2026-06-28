@@ -128,8 +128,13 @@
                                 <strong>{{ comment.author }}</strong>
                                 <small class="text-muted d-block">{{ comment.created_at }}</small>
                             </div>
-                            <div class="comment-text mt-1">
-                                {{ comment.body }} </div>
+                            <div class="comment-text mt-1">{{ comment.body }} </div>
+                            {% if request.user == comment.author %}
+                            <div class="d-flex align-items-center mt-2">
+                                <a href="{% url 'blog:edit_comment' comment.id %}" class="btn btn-warning btn-sm me-2 mr-2">Edit</a>
+                                <a href="{% url 'blog:delete_comment' comment.id %}" class="btn btn-danger btn-sm">Delete</a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

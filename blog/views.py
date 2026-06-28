@@ -42,6 +42,36 @@ def post_detail(request,year,month, day, slug):
     comments = Comment.objects.filter(post = post).order_by('-created_at').select_related('author')
     return render(request,'blog/detail.html',{'post': post, 'form':form, 'related_posts':related_posts, 'comments': comments})
 
+@login_required
+def edit_comment(request, comment_id):
+
+    comment = get_object_or_404(Comment, pk=comment_id)
+    
+    if comment.author != request.user:
+        from django.http import HttpResponseForbidden
+        return HttpResponseForbidden("You are not allowed to edit this comment.")
+
+    form = CommentForm(instance=comment)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect(comment.post.get_absolute_url()) 
+        
+    return render(request, 'blog/editcomment.html', {'form': form})
+
+
+@login_required() 
+def delete_comment(request,comment_id):
+    comment = Comment.objects.get(pk = comment_id)
+    if request.user != comment.author:
+        return HttpResponse("You can't delete this post")
+    else:
+        comment.delete()
+        return redirect(comment.post.get_absolute_url()) 
+
+
 
 @login_required(login_url='blog:login')
 def add_post(request):

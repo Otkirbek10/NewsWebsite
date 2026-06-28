@@ -17,6 +17,9 @@ urlpatterns = [
     path('login/', login_user, name = 'login'),
     path('logout/', logout_user, name = 'logout'),
     path('contact/',ContactView.as_view(), name = 'contact'),
-    path('<slug:slug>/share/', post_share, name = 'post_share')
+    path('<slug:slug>/share/', post_share, name = 'post_share'),
+    path('edit-comment/<int:comment_id>/', edit_comment, name='edit_comment'),
+    path('delete-comment/<int:comment_id>/',delete_comment,name='delete_comment'),
+
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
